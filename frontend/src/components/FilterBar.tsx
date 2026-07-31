@@ -21,11 +21,7 @@ function FilterBar({
   stats,
 }: FilterBarProps) {
   return (
-    <div
-      className="filter-bar"
-      role="tablist"
-      aria-label="Filter task berdasarkan status"
-    >
+    <div className="flex gap-2 flex-wrap" role="tablist" aria-label="Filter task berdasarkan status">
       {FILTERS.map((filter) => {
         const isActive = activeFilter === filter.key;
         const count = stats ? stats[filter.statKey] : 0;
@@ -35,13 +31,19 @@ function FilterBar({
             key={filter.key}
             role="tab"
             aria-selected={isActive}
-            className={`filter-pill ${
-              isActive ? "filter-pill--active" : ""
+            className={`bg-[#f2f3f6] border border-transparent text-(--color-text-soft) rounded-full px-3.5 py-1.75 text-[0.85rem] font-semibold inline-flex items-center gap-1.75 transition-all duration-150 ease-out hover:text-(--color-text) ${
+              isActive ? "bg-(--color-accent)! text-white!" : ""
             }`}
             onClick={() => onChangeFilter(filter.key)}
           >
             {filter.label}
-            <span className="filter-pill__count">{count}</span>
+            <span
+              className={`rounded-full px-1.75 py-px text-[0.75rem] ${
+                isActive ? "bg-white/25" : "bg-black/8"
+              }`}
+            >
+              {count}
+            </span>
           </button>
         );
       })}

@@ -18,12 +18,21 @@ const ICONS: Record<NotificationType, string> = {
   error: "!",
 };
 
+const TOAST_BG: Record<NotificationType, string> = {
+  success: "bg-[#15532f]",
+  error: "bg-[#6b1f1f]",
+};
+
 function Notification({
   notifications,
   onDismiss,
 }: NotificationProps) {
   return (
-    <div className="toast-stack" role="status" aria-live="polite">
+    <div
+      className="fixed top-5 right-5 flex flex-col gap-2.5 z-200 max-[720px]:left-4 max-[720px]:right-4"
+      role="status"
+      aria-live="polite"
+    >
       {notifications.map((notification) => (
         <ToastItem
           key={notification.id}
@@ -54,17 +63,13 @@ function ToastItem({
   }, [notification.id, onDismiss]);
 
   return (
-    <div className={`toast toast--${notification.type}`}>
-      <span className="toast__icon">
-        {ICONS[notification.type]}
-      </span>
-
-      <span className="toast__message">
-        {notification.message}
-      </span>
-
+    <div
+      className={`flex items-center gap-2.5 text-white px-3.5 py-3 rounded-sm min-w-60 max-w-85 shadow-(--shadow-pop) animate-[slideIn_0.18s_ease] max-[720px]:max-w-none ${TOAST_BG[notification.type]}`}
+    >
+      <span className="font-extrabold">{ICONS[notification.type]}</span>
+      <span className="flex-1 text-[0.87rem]">{notification.message}</span>
       <button
-        className="toast__close"
+        className="bg-transparent border-none text-white/70 text-[1.1rem] leading-none hover:text-white"
         onClick={() => onDismiss(notification.id)}
         aria-label="Tutup notifikasi"
       >
