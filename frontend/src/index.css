@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   --color-bg: #f4f5f8;
   --color-surface: #ffffff;
@@ -25,6 +27,21 @@
 
   --font-display: 'Manrope', 'Segoe UI', sans-serif;
   --font-body: 'Inter', 'Segoe UI', sans-serif;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 * {

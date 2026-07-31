@@ -202,40 +202,38 @@ function App() {
       : tasks.filter((t) => t.status === filter);
 
   return (
-    <div className="app-shell">
-      <header className="app-header">
+    <div className="min-h-screen flex flex-col">
+      <header className="bg-(--color-surface) border-b border-(--color-border) px-8 py-7 max-[720px]:p-5">
         <div>
-          <h1 className="app-header__title">Task Tracker</h1>
-          <p className="app-header__subtitle">
+          <h1 className="font-extrabold text-[1.65rem] m-0 tracking-[-0.02em]">
+            Task Tracker
+          </h1>
+          <p className="mt-1 mb-0 text-(--color-text-soft) text-[0.92rem]">
             Manajemen tugas tim internal
           </p>
         </div>
       </header>
 
-      <main className="app-main">
+      <main className="flex-1 w-full max-w-245 mx-auto px-5 pt-7 pb-16 flex flex-col gap-5.5">
         <StatsCard stats={stats} />
 
         {loadError && (
-          <div className="banner banner--error">
+          <div className="px-4 py-3 rounded-sm text-[0.88rem] bg-(--color-danger-soft) text-(--color-danger)">
             {loadError}
           </div>
         )}
 
         <TaskForm onAddTask={handleAddTask} />
 
-        <section className="card task-list-section">
-          <div className="task-list-section__header">
-            <h2 className="card__title">Daftar Task</h2>
+        <section className="bg-(--color-surface) border border-(--color-border) rounded-lg px-6 py-5.5 shadow-(--shadow-card)">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-4.5 max-[720px]:flex-col max-[720px]:items-start">
+            <h2 className="font-bold text-[1.05rem] m-0">Daftar Task</h2>
 
-            <FilterBar
-              activeFilter={filter}
-              onChangeFilter={setFilter}
-              stats={stats}
-            />
+            <FilterBar activeFilter={filter} onChangeFilter={setFilter} stats={stats} />
           </div>
 
           {loading ? (
-            <p className="loading-text">Memuat task...</p>
+            <p className="text-(--color-text-soft) text-center py-6">Memuat task...</p>
           ) : (
             <TaskList
               tasks={filteredTasks}
@@ -248,25 +246,14 @@ function App() {
       </main>
 
       {editingTask && (
-        <EditModal
-          task={editingTask}
-          onSave={handleEditSave}
-          onCancel={() => setEditingTask(null)}
-        />
+        <EditModal task={editingTask} onSave={handleEditSave} onCancel={() => setEditingTask(null)} />
       )}
 
       {deletingTask && (
-        <ConfirmDialog
-          task={deletingTask}
-          onConfirm={handleDeleteConfirm}
-          onCancel={() => setDeletingTask(null)}
-        />
+        <ConfirmDialog task={deletingTask} onConfirm={handleDeleteConfirm} onCancel={() => setDeletingTask(null)} />
       )}
 
-      <Notification
-        notifications={notifications}
-        onDismiss={dismissNotification}
-      />
+      <Notification notifications={notifications} onDismiss={dismissNotification} />
     </div>
   );
 }
