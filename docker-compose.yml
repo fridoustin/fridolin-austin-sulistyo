@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:17
+    container_name: tasktracker-db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: fridoustin
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: fridolin_gli_tasktracker
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fridoustin -d fridolin_gli_tasktracker"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+
+    container_name: tasktracker-backend
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      DATABASE_URL: postgresql://fridoustin:postgres@db:5432/fridolin_gli_tasktracker
+
+  frontend:
+    build:
+      context: ./frontend
+
+    container_name: tasktracker-frontend
+
+    depends_on:
+      - backend
+
+    ports:
+      - "5173:5173"
+
+    environment:
+      VITE_API_URL: http://localhost:8000
+
+volumes:
+  postgres_data:
