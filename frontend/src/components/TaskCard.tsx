@@ -45,7 +45,7 @@ function TaskCard({
 }: TaskCardProps) {
   return (
     <article
-      className={`border border-(--color-border) border-l-4 ${STATUS_BORDER[task.status]} rounded-md px-4.5 py-4 bg-white flex flex-col gap-2.5 transition-[box-shadow,transform] duration-150 ease-out hover:shadow-(--shadow-card)`}
+      className={`border border-(--color-border) border-l-4 ${STATUS_BORDER[task.status]} rounded-md px-4.5 py-4 bg-white flex flex-col h-full gap-2.5 transition-[box-shadow,transform] duration-150 ease-out hover:shadow-(--shadow-card)`}
     >
       <div className="flex justify-between items-start gap-2.5">
         <h3 className="text-base font-bold m-0 leading-[1.3]">{task.title}</h3>
@@ -57,9 +57,13 @@ function TaskCard({
         </span>
       </div>
 
-      {task.description && (
+      {task.description ? (
         <p className="m-0 text-(--color-text-soft) text-[0.88rem] leading-[1.4]">
           {task.description}
+        </p>
+      ) : (
+        <p className="m-0 text-[0.88rem] italic text-gray-400">
+          Tidak ada deskripsi
         </p>
       )}
 
