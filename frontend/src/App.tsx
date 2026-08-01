@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import "./App.css";
 
 import * as api from "./api/taskapi";
 
